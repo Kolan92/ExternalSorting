@@ -42,6 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CancelCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="CommandExecutor.cs" />
+    <Compile Include="CommandParser.cs" />
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\IncorrectCommand.cs" />
+    <Compile Include="Commands\SortCommand.cs" />
+    <Compile Include="Input\ConsoleInput.cs" />
+    <Compile Include="Input\ConsoleReader.cs" />
+    <Compile Include="Input\IInput.cs" />
+    <Compile Include="Input\IInputParser.cs" />
+    <Compile Include="Input\IInputReader.cs" />
+    <Compile Include="Input\InputReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
