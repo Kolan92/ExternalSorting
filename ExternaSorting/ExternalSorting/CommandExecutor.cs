@@ -1,4 +1,5 @@
 ﻿using ExternalSorting.Input;
+using System;
 
 namespace ExternalSorting
 {
@@ -22,8 +23,9 @@ namespace ExternalSorting
             {
                 var userInput = _inputParser.Parse();
                 var currentCommand = _commandParser.ParseCommand(userInput);
+                var commandOutput = currentCommand.Execute();
+                Console.WriteLine(commandOutput);
             }
-
         }
     }
 }

@@ -11,10 +11,10 @@ namespace ExternalSorting.Commands
             this.userInput = userInput;
         }
 
-        public override string Execute()
+        public override ICommandData Execute()
         {
             var helpMessage = base.Execute();
-            return $"Unrecognized command {userInput}{Environment.NewLine}{helpMessage}";
+            return new ContinueData($"Unrecognized command {userInput}{Environment.NewLine}{helpMessage}");
         }
     }
 }

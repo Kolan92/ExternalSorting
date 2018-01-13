@@ -9,6 +9,9 @@ namespace ExternalSorting
         {
             switch (input.CommandName.ToLower())
             {
+                case "e":
+                case "exit":
+                    return new ExitCommand();
                 case "h":
                 case "help":
                     return new HelpCommand();

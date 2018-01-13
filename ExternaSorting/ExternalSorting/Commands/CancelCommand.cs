@@ -2,7 +2,7 @@
 {
     public class CancelCommand : ICommand
     {
-        public string Execute()
+        public ICommandData Execute()
         {
             throw new System.NotImplementedException();
         }

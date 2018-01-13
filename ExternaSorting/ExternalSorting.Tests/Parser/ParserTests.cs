@@ -27,8 +27,9 @@ namespace ExternalSorting.Tests.Parser
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<IncorrectCommand>();
-            var message = command.Execute();
-            message.Should().Contain($"Unrecognized command {userInput}");
+            var data = command.Execute();
+            data.CommandOutput.Should().Contain($"Unrecognized command {userInput}");
+            data.ContinueExecution.Should().BeTrue();
         }
 
         [TestCase("help")]
@@ -43,7 +44,7 @@ namespace ExternalSorting.Tests.Parser
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<HelpCommand>();
-            var message = command.Execute();
+            var data = command.Execute();
             var expectedHelpMessage = 
 @"External Sort
 This program allow to sort large files of float numbers.
@@ -53,7 +54,26 @@ Supported commands:
     s, sort     <path>  Sorts file in given path
     c, cancel           Breaks sorting step
     e, exit             Exit program";
-            message.Should().Be(expectedHelpMessage);
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeTrue();
+        }
+
+        [TestCase("e")]
+        [TestCase("E")]
+        [TestCase("exit")]
+        [TestCase("EXIT")]
+        public void Should_Return_Exit_Message(string userInput)
+        {
+            var inputSubstitute = Substitute.For<IInput>();
+            inputSubstitute.CommandName.Returns(userInput);
+
+            var command = _commandParser.ParseCommand(inputSubstitute);
+            command.Should().BeOfType<ExitCommand>();
+            var data = command.Execute();
+
+            var expectedHelpMessage = @"Application terminated";
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeFalse();
         }
     }
 }

@@ -2,9 +2,11 @@
 {
     public class ExitCommand : ICommand
     {
-        public string Execute()
+        private const string Message = "Application terminated";
+
+        public ICommandData Execute()
         {
-            throw new System.NotImplementedException();
+            return new ExitData(Message);
         }
     }
 }
