@@ -33,6 +33,7 @@ namespace ExternalSorting
                 var userInput = _inputParser.Parse();
                 var currentCommand = _commandParser.ParseCommand(userInput);
                 var commandData = currentCommand.Execute();
+
                 _printer.Print(commandData.CommandOutput);
                 _isRunning = commandData.ContinueExecution;
             } while (_isRunning);

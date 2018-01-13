@@ -13,7 +13,7 @@ namespace ExternalSorting.Commands
 
         public override ICommandData Execute()
         {
-            var helpMessage = base.Execute();
+            var helpMessage = base.Execute().CommandOutput;
             return new ContinueData($"Unrecognized command {userInput}{Environment.NewLine}{helpMessage}");
         }
     }
