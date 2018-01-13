@@ -3,7 +3,11 @@ using ExternalSorting.Input;
 
 namespace ExternalSorting
 {
-    public class CommandParser
+    public interface ICommandParser
+    {
+        ICommand ParseCommand(IInput input);
+    }
+    public class CommandParser : ICommandParser
     {
         public ICommand ParseCommand(IInput input)
         {

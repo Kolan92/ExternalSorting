@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            var shell = new Shell();
+            var shell = ShellFactory.DefaultShell();
             shell.Start();
         }
     }
