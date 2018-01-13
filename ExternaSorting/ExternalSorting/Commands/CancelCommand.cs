@@ -1,10 +1,15 @@
-﻿namespace ExternalSorting.Commands
+﻿using System;
+
+namespace ExternalSorting.Commands
 {
-    public class CancelCommand : ICommand
+    public class CancelCommand : Command
     {
-        public ICommandData Execute()
+        private const string Message = "Sort cancel requested";
+
+        public override ICommandData Execute()
         {
-            throw new System.NotImplementedException();
+            OnCancellationRequested(EventArgs.Empty);
+            return new ContinueData(Message);
         }
     }
 }

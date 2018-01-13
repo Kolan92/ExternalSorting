@@ -1,11 +1,14 @@
-﻿namespace ExternalSorting.Commands
+﻿using System;
+
+namespace ExternalSorting.Commands
 {
-    public class ExitCommand : ICommand
+    public class ExitCommand : Command
     {
         private const string Message = "Application terminated";
 
-        public ICommandData Execute()
+        public override ICommandData Execute()
         {
+            OnCancellationRequested(EventArgs.Empty);
             return new ExitData(Message);
         }
     }

@@ -75,5 +75,24 @@ Supported commands:
             data.CommandOutput.Should().Be(expectedHelpMessage);
             data.ContinueExecution.Should().BeFalse();
         }
+
+
+        [TestCase("c")]
+        [TestCase("C")]
+        [TestCase("cancel")]
+        [TestCase("CANCEL")]
+        public void Should_Return_Cancel_Message(string userInput)
+        {
+            var inputSubstitute = Substitute.For<IInput>();
+            inputSubstitute.CommandName.Returns(userInput);
+
+            var command = _commandParser.ParseCommand(inputSubstitute);
+            command.Should().BeOfType<CancelCommand>();
+            var data = command.Execute();
+
+            var expectedHelpMessage = @"Sort cancel requested";
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeTrue();
+        }
     }
 }

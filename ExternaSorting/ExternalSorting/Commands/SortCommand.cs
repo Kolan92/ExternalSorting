@@ -1,8 +1,8 @@
 ﻿namespace ExternalSorting.Commands
 {
-    public class SortCommand : ICommand
+    public class SortCommand : Command
     {
-        public ICommandData Execute()
+        public override ICommandData Execute()
         {
             throw new System.NotImplementedException();
         }

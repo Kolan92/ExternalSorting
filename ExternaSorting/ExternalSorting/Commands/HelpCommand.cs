@@ -1,6 +1,6 @@
 ﻿namespace ExternalSorting.Commands
 {
-    public class HelpCommand : ICommand
+    public class HelpCommand : Command
     {
         private const string Message =
             @"External Sort
@@ -12,7 +12,7 @@ Supported commands:
     c, cancel           Breaks sorting step
     e, exit             Exit program";
 
-        public virtual ICommandData Execute()
+        public override ICommandData Execute()
         {
 
             return new ContinueData(Message);
