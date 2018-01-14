@@ -14,19 +14,24 @@ namespace ExternalSorting.SortTask
 
             factory.StartNew(() =>
             {
+                ISortStrategy strategy = null;
 
                 try
                 {
                     token.Register(Thread.CurrentThread.Abort);
                     var memoryChecker = new MemoryChecker();
                     var strategyFactory = new SortStrategyFactory(memoryChecker);
-                    var strategy = strategyFactory.ChooseSortStrategy(fileName);
+                    strategy = strategyFactory.ChooseSortStrategy(fileName);
                     strategy.Sort();
 
                 }
-                catch (ThreadAbortException ex)
+                catch (ThreadAbortException)
                 {
-                    // do nothing
+                    // do nothing, operation was cancelled
+                }
+                finally
+                {
+                    strategy.CleanUp();
                 }
 
             }, token);

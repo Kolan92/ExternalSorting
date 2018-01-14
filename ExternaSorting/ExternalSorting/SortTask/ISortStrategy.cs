@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -8,6 +7,7 @@ namespace ExternalSorting.SortTask
     public interface ISortStrategy
     {
         void Sort();
+        void CleanUp();
     }
 
     public abstract class FileSort
@@ -28,11 +28,16 @@ namespace ExternalSorting.SortTask
         public void Sort()
         {
             var floats = File.ReadAllLines(_filePath)
-                .Select(line => float.Parse(line, CultureInfo.InvariantCulture.NumberFormat))
+                .Select(line => Convert.ToSingle(line))
                 .ToArray();
 
             Array.Sort(floats);
             File.WriteAllText(_filePath, string.Join(Environment.NewLine, floats));
+        }
+
+        public void CleanUp()
+        {
+            //do nothing, nothing to clean
         }
     }
 
@@ -45,6 +50,11 @@ namespace ExternalSorting.SortTask
         public void Sort()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void CleanUp()
+        {
+            throw new NotImplementedException();
         }
     }
 }

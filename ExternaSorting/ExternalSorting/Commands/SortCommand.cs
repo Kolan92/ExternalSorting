@@ -29,7 +29,6 @@ namespace ExternalSorting.Commands
             if(!File.Exists(path))
                 return new ContinueData(string.Format(IncorrectPath, path));
 
-
             var token = RunTask();
             return new SortData(SortingStarted, token);
         }
