@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ExternalSorting.SortTask;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ExternalSorting.Commands
 {
@@ -30,30 +29,15 @@ namespace ExternalSorting.Commands
             if(!File.Exists(path))
                 return new ContinueData(string.Format(IncorrectPath, path));
 
+
             var token = RunTask();
             return new SortData(SortingStarted, token);
         }
 
         private CancellationTokenSource RunTask()
         {
-            var source = new CancellationTokenSource();
-            var token = source.Token;
-
- 
-            var factory = new TaskFactory(token);
-            factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    if (source.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                    Console.WriteLine("Hello from task! " + DateTime.Now);
-                    Thread.Sleep(1000);
-                }
-            }, token);
-            return source;
+            var factory = new SortTaskFactory();
+            return factory.StartNew(path);
         }
 
         private bool IsAbbFile(string path)

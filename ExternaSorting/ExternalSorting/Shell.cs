@@ -32,8 +32,8 @@ namespace ExternalSorting
         public void Start()
         {
             var initialCommand = new HelpCommand();
-            var helpMessage = initialCommand.Execute().CommandOutput;
-            _printer.Print(helpMessage);
+            var helpMessage = initialCommand.Execute();
+            _printer.Print(helpMessage.CommandOutput);
 
             do
             {

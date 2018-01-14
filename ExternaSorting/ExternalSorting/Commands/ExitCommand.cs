@@ -6,7 +6,7 @@ namespace ExternalSorting.Commands
     {
         private const string Message = "Application terminated";
 
-        public override ICommandData Execute(bool canScheduleTask = true)
+        public override ICommandData Execute(bool canScheduleTask = false)
         {
             OnCancellationRequested(EventArgs.Empty);
             return new ExitData(Message);

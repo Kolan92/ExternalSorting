@@ -27,7 +27,7 @@ namespace ExternalSorting.Tests.Parser
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<IncorrectCommand>();
-            var data = command.Execute();
+            var data =  command.Execute();
             data.CommandOutput.Should().Contain($"Unrecognized command {userInput}");
             data.ContinueExecution.Should().BeTrue();
         }
@@ -44,7 +44,7 @@ namespace ExternalSorting.Tests.Parser
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<HelpCommand>();
-            var data = command.Execute();
+            var data =  command.Execute();
             var expectedHelpMessage = 
 @"External Sort
 This program allow to sort large files of float numbers.
@@ -69,7 +69,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<ExitCommand>();
-            var data = command.Execute();
+            var data =  command.Execute();
 
             var expectedHelpMessage = @"Application terminated";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -88,7 +88,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<CancelCommand>();
-            var data = command.Execute();
+            var data =  command.Execute();
 
             var expectedHelpMessage = @"Sort cancel requested";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -106,7 +106,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute(true);
+            var data =  command.Execute(true);
 
             var expectedHelpMessage = @"Sort command needs path argument";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -122,7 +122,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute(true);
+            var data =  command.Execute(true);
 
             var expectedHelpMessage = "Only files with '.abb' extensions are supported";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -138,7 +138,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute(true);
+            var data =  command.Execute(true);
 
             var expectedHelpMessage = $"{inputSubstitute.CommandParameters} is not correct path";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -153,7 +153,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute(false);
+            var data =  command.Execute(false);
 
             var expectedHelpMessage = "Can not schedule file sort, while another sort is in progress";
             data.CommandOutput.Should().Be(expectedHelpMessage);

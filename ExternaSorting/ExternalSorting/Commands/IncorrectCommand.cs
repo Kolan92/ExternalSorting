@@ -11,10 +11,10 @@ namespace ExternalSorting.Commands
             this.userInput = userInput;
         }
 
-        public override ICommandData Execute(bool canScheduleTask = true)
+        public override ICommandData Execute(bool canScheduleTask = false)
         {
-            var helpMessage = base.Execute().CommandOutput;
-            return new ContinueData($"Unrecognized command {userInput}{Environment.NewLine}{helpMessage}");
+            var helpMessage = base.Execute();
+            return new ContinueData($"Unrecognized command {userInput}{Environment.NewLine}{helpMessage.CommandOutput}");
         }
     }
 }

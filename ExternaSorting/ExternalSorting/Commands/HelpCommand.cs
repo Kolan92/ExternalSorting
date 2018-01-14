@@ -12,9 +12,8 @@ Supported commands:
     c, cancel           Breaks sorting step
     e, exit             Exit program";
 
-        public override ICommandData Execute(bool canScheduleTask = true)
+        public override ICommandData Execute(bool canScheduleTask = false)
         {
-
             return new ContinueData(Message);
         }
     }

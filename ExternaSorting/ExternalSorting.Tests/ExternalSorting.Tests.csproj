@@ -64,6 +64,7 @@
     <Compile Include="Parser\ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\ShellTests.cs" />
+    <Compile Include="SortTask\SortFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExternalSorting\ExternalSorting.csproj">

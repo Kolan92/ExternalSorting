@@ -11,6 +11,6 @@ namespace ExternalSorting.Commands
         }
 
         public event EventHandler CancellationRequested;
-        public abstract ICommandData Execute(bool canScheduleTask = true);
+        public abstract ICommandData Execute(bool canScheduleTask = false);
     }
 }
