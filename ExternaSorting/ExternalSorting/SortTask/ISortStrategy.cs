@@ -1,4 +1,9 @@
-﻿namespace ExternalSorting.SortTask
+﻿using System;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+
+namespace ExternalSorting.SortTask
 {
     public interface ISortStrategy
     {
@@ -7,7 +12,7 @@
 
     public abstract class FileSort
     {
-        private readonly string _filePath;
+        protected readonly string _filePath;
 
         protected FileSort(string filePath)
         {
@@ -22,7 +27,12 @@
 
         public void Sort()
         {
-            throw new System.NotImplementedException();
+            var floats = File.ReadAllLines(_filePath)
+                .Select(line => float.Parse(line, CultureInfo.InvariantCulture.NumberFormat))
+                .ToArray();
+
+            Array.Sort(floats);
+            File.WriteAllText(_filePath, string.Join(Environment.NewLine, floats));
         }
     }
 

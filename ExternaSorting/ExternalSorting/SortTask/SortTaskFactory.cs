@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExternalSorting.SortTask
@@ -18,15 +17,12 @@ namespace ExternalSorting.SortTask
 
                 try
                 {
-                    using (token.Register(Thread.CurrentThread.Abort))
-                    {
-                        while (true)
-                        {
+                    token.Register(Thread.CurrentThread.Abort);
+                    var memoryChecker = new MemoryChecker();
+                    var strategyFactory = new SortStrategyFactory(memoryChecker);
+                    var strategy = strategyFactory.ChooseSortStrategy(fileName);
+                    strategy.Sort();
 
-                            Console.WriteLine("Hello from task! " + DateTime.Now);
-                            Thread.Sleep(1000);
-                        }
-                    }
                 }
                 catch (ThreadAbortException ex)
                 {
