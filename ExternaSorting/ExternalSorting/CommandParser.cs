@@ -13,6 +13,9 @@ namespace ExternalSorting
         {
             switch (input.CommandName.ToLower())
             {
+                case "s":
+                case "sort":
+                    return new SortCommand(input.CommandParameters);
                 case "c":
                 case "cancel":
                     return new CancelCommand();

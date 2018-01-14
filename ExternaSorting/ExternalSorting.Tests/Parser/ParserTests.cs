@@ -94,5 +94,55 @@ Supported commands:
             data.CommandOutput.Should().Be(expectedHelpMessage);
             data.ContinueExecution.Should().BeTrue();
         }
+
+        [TestCase("s")]
+        [TestCase("S")]
+        [TestCase("sort")]
+        [TestCase("SORT")]
+        public void Should_Return_Sort_Message_Needs_Path_Argument(string userInput)
+        {
+            var inputSubstitute = Substitute.For<IInput>();
+            inputSubstitute.CommandName.Returns(userInput);
+
+            var command = _commandParser.ParseCommand(inputSubstitute);
+            command.Should().BeOfType<SortCommand>();
+            var data = command.Execute();
+
+            var expectedHelpMessage = @"Sort command needs path argument";
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_Return_Not_Supported_File_Type()
+        {
+            var inputSubstitute = Substitute.For<IInput>();
+            inputSubstitute.CommandName.Returns("sort");
+            inputSubstitute.CommandParameters.Returns("some.txt");
+
+            var command = _commandParser.ParseCommand(inputSubstitute);
+            command.Should().BeOfType<SortCommand>();
+            var data = command.Execute();
+
+            var expectedHelpMessage = "Only files with '.abb' extensions are supported";
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_Return_Message_Path_Is_Incorrect()
+        {
+            var inputSubstitute = Substitute.For<IInput>();
+            inputSubstitute.CommandName.Returns("sort");
+            inputSubstitute.CommandParameters.Returns("not_a_path.abb");
+
+            var command = _commandParser.ParseCommand(inputSubstitute);
+            command.Should().BeOfType<SortCommand>();
+            var data = command.Execute();
+
+            var expectedHelpMessage = $"{inputSubstitute.CommandParameters} is not correct path";
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeTrue();
+        }
     }
 }
