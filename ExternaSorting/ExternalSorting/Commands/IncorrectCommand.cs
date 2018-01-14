@@ -11,7 +11,7 @@ namespace ExternalSorting.Commands
             this.userInput = userInput;
         }
 
-        public override ICommandData Execute()
+        public override ICommandData Execute(bool canScheduleTask = true)
         {
             var helpMessage = base.Execute().CommandOutput;
             return new ContinueData($"Unrecognized command {userInput}{Environment.NewLine}{helpMessage}");

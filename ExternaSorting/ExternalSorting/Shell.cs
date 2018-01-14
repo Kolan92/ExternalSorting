@@ -13,8 +13,8 @@ namespace ExternalSorting
         private readonly IInputParser _inputParser;
         private readonly IPrinter _printer;
 
-        //private Task<object> _sortTask;
         private Option<CancellationTokenSource> _cancellationToken;
+        private bool CanScheduleTask => !_cancellationToken.HasValue;
         private bool _isRunning;
 
         public Shell(
@@ -40,17 +40,25 @@ namespace ExternalSorting
                 var userInput = _inputParser.Parse();
                 var currentCommand = _commandParser.ParseCommand(userInput);
                 currentCommand.CancellationRequested += CancellationRequested;
-                var commandData = currentCommand.Execute();
+                var commandData = currentCommand.Execute(CanScheduleTask);
 
                 _printer.Print(commandData.CommandOutput);
                 _isRunning = commandData.ContinueExecution;
+
+                if(commandData.Token.HasValue)
+                    _cancellationToken = commandData.Token;
+
             } while (_isRunning);
         }
 
 
         private void CancellationRequested(object sender, EventArgs e)
         {
-            Console.WriteLine("cancel call.");
+            if (_cancellationToken.HasValue)
+            {
+                _cancellationToken.Value.Cancel();
+                _cancellationToken = new Option<CancellationTokenSource>();
+            }
         }
     }
 }

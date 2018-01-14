@@ -106,7 +106,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute();
+            var data = command.Execute(true);
 
             var expectedHelpMessage = @"Sort command needs path argument";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -122,7 +122,7 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute();
+            var data = command.Execute(true);
 
             var expectedHelpMessage = "Only files with '.abb' extensions are supported";
             data.CommandOutput.Should().Be(expectedHelpMessage);
@@ -138,9 +138,24 @@ Supported commands:
 
             var command = _commandParser.ParseCommand(inputSubstitute);
             command.Should().BeOfType<SortCommand>();
-            var data = command.Execute();
+            var data = command.Execute(true);
 
             var expectedHelpMessage = $"{inputSubstitute.CommandParameters} is not correct path";
+            data.CommandOutput.Should().Be(expectedHelpMessage);
+            data.ContinueExecution.Should().BeTrue();
+        }
+
+        [Test]
+        public void Should_Return_Can_Not_Schedule_Sort_When_Another_Is_In_Progress()
+        {
+            var inputSubstitute = Substitute.For<IInput>();
+            inputSubstitute.CommandName.Returns("sort");
+
+            var command = _commandParser.ParseCommand(inputSubstitute);
+            command.Should().BeOfType<SortCommand>();
+            var data = command.Execute(false);
+
+            var expectedHelpMessage = "Can not schedule file sort, while another sort is in progress";
             data.CommandOutput.Should().Be(expectedHelpMessage);
             data.ContinueExecution.Should().BeTrue();
         }

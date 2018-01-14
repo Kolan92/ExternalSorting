@@ -6,7 +6,7 @@ namespace ExternalSorting.Commands
     {
         private const string Message = "Sort cancel requested";
 
-        public override ICommandData Execute()
+        public override ICommandData Execute(bool canScheduleTask)
         {
             OnCancellationRequested(EventArgs.Empty);
             return new ContinueData(Message);

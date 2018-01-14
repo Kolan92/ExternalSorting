@@ -4,7 +4,7 @@ namespace ExternalSorting.Commands
 {
     public interface ICommand
     {
-        ICommandData Execute();
+        ICommandData Execute(bool canScheduleTask = false);
         event EventHandler CancellationRequested;
     }
 }
