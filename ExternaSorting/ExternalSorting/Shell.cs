@@ -40,6 +40,10 @@ namespace ExternalSorting
                 var userInput = _inputParser.Parse();
                 var currentCommand = _commandParser.ParseCommand(userInput);
                 currentCommand.CancellationRequested += CancellationRequested;
+
+                if (CanScheduleTask)
+                    currentCommand.SortFinished += SortFinished;
+
                 var commandData = currentCommand.Execute(CanScheduleTask);
 
                 _printer.Print(commandData.CommandOutput);
@@ -57,6 +61,21 @@ namespace ExternalSorting
             if (_cancellationToken.HasValue)
             {
                 _cancellationToken.Value.Cancel();
+                _cancellationToken = new Option<CancellationTokenSource>();
+            }
+        }
+
+        private void SortFinished(object sender, SortFinishedArgs e)
+        {
+            if (e.IsSuccess)
+                _printer.Print("Sorting finished with success");
+            else
+            {
+                _printer.Print($"Sorting finished with error: {e.Exception}");
+            }
+
+            if (_cancellationToken.HasValue)
+            {
                 _cancellationToken = new Option<CancellationTokenSource>();
             }
         }

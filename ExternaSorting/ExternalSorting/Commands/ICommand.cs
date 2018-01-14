@@ -6,5 +6,6 @@ namespace ExternalSorting.Commands
     {
         ICommandData Execute(bool canScheduleTask = false);
         event EventHandler CancellationRequested;
+        event EventHandler<SortFinishedArgs> SortFinished;
     }
 }

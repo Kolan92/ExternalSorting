@@ -45,6 +45,7 @@
     <Compile Include="Commands\CancelCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\SortFinishedArgs.cs" />
     <Compile Include="Printer\ConsolePrinter.cs" />
     <Compile Include="Printer\IPrinter.cs" />
     <Compile Include="Shell.cs" />
