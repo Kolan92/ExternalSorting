@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 
 namespace ExternalSorting.SortTask
 {
@@ -19,42 +17,16 @@ namespace ExternalSorting.SortTask
             _filePath = filePath;
         }
     }
-    public class SingleFileSort : FileSort, ISortStrategy
+
+    public class TempFileNumber
     {
-        public SingleFileSort(string filePath)
-            : base(filePath)
-        { }
+        public float? Number { get; private set; }
+        public int ReaderIndex { get; private set; }
 
-        public void Sort()
+        public TempFileNumber(string line, int index)
         {
-            var floats = File.ReadAllLines(_filePath)
-                .Select(line => Convert.ToSingle(line))
-                .ToArray();
-
-            Array.Sort(floats);
-            File.WriteAllText(_filePath, string.Join(Environment.NewLine, floats));
-        }
-
-        public void CleanUp()
-        {
-            //do nothing, nothing to clean
-        }
-    }
-
-    public class MultiFileSort : FileSort, ISortStrategy
-    {
-        public MultiFileSort(string filePath)
-            : base(filePath)
-        { }
-
-        public void Sort()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void CleanUp()
-        {
-            throw new NotImplementedException();
+            Number = string.IsNullOrEmpty(line) ? null : (float?) Convert.ToSingle(line);
+            ReaderIndex = index;
         }
     }
 }
